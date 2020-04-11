@@ -5,17 +5,6 @@
 
 // Exposed
 
-///
-public protocol PredicateProtocol {
-
-    // Exposed
-
-    // Type: PredicateProtocol
-    // Topic: Main
-
-    ///
-    associatedtype Sample
-
-    ///
-    func isMatching(_ sample: Sample) -> Bool
-}
+// A namespace for standard patterns.
+@frozen
+public enum Patterns { }

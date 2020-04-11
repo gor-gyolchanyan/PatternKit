@@ -12,6 +12,7 @@ extension MainTestCase {
     static let entrySet = [
         ("testStandardPredicates", testStandardPredicates),
         ("testAnyPredicate", testAnyPredicate),
+        ("testStandardPatterns", testStandardPatterns),
     ]
 
     func testStandardPredicates() {
@@ -88,5 +89,14 @@ extension MainTestCase {
         XCTAssertFalse(anyPredicate.isMatching(-1))
         XCTAssertTrue(anyPredicate.isMatching(0))
         XCTAssertFalse(anyPredicate.isMatching(1))
+    }
+
+    func testStandardPatterns() {
+        let numbers = [2, 4, 3 , 1, 8, 5]
+
+        let manyEven =
+            when(Int.self) { $0.isMultiple(of: 2) }
+            .many()
+        XCTAssert(numbers.prefix(matching: manyEven) == [2, 4])
     }
 }

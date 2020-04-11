@@ -21,7 +21,7 @@ extension Collection {
     @inlinable
     public func firstIndex<P>(matching predicate: P) -> Index?
     where P: PredicateProtocol, P.Sample == Element {
-        return firstIndex(where: predicate.isMatching(_:))
+        firstIndex(where: predicate.isMatching(_:))
     }
 
     ///

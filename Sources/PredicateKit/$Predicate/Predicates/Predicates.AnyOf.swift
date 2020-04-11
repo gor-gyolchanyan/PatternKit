@@ -8,16 +8,16 @@ extension Predicates {
     // Exposed
 
     // Type: Predicates
-    // Topic: AllOf
+    // Topic: AnyOf
 
     ///
     @frozen
-    public struct AllOf<Predicates>
+    public struct AnyOf<Predicates>
     where Predicates: Collection, Predicates.Element: PredicateProtocol {
 
         // Exposed
 
-        // Type: Predicates.AllOf
+        // Type: Predicates.AnyOf
         // Topic: Main
 
         ///
@@ -31,7 +31,7 @@ extension Predicates {
     }
 }
 
-extension Predicates.AllOf: Equatable
+extension Predicates.AnyOf: Equatable
 where Predicates: Equatable {
 
     // Exposed
@@ -44,7 +44,7 @@ where Predicates: Equatable {
     }
 }
 
-extension Predicates.AllOf: PredicateProtocol {
+extension Predicates.AnyOf: PredicateProtocol {
 
     // Exposed
 
@@ -56,11 +56,11 @@ extension Predicates.AllOf: PredicateProtocol {
     @inlinable
     public func isMatching(_ sample: Sample) -> Bool {
         for predicate in predicates {
-            if !predicate.isMatching(sample) {
-                return false
+            if predicate.isMatching(sample) {
+                return true
             }
         }
-        return true
+        return false
     }
 }
 
@@ -74,19 +74,18 @@ where Element: PredicateProtocol {
 
     ///
     @inlinable
-    func allOf() -> Predicates.AllOf<Self> {
+    public func anyOf() -> Predicates.AnyOf<Self> {
         .init(self)
     }
 }
-
 // Exposed
 
 ///
 @inlinable
-public func allOf<P>(
+public func anyOf<P>(
     _ predicates: P...,
     as sampleType: P.Sample.Type = P.Sample.self
-) -> Predicates.AllOf<[P]> {
+) -> Predicates.AnyOf<[P]> {
     assert(sampleType == P.Sample.self)
-    return predicates.allOf()
+    return predicates.anyOf()
 }
