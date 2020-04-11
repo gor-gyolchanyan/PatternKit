@@ -86,5 +86,6 @@ public func anyOf<P>(
     _ predicates: P...,
     as sampleType: P.Sample.Type = P.Sample.self
 ) -> Predicates.AnyOf<[P]> {
-    predicates.anyOf()
+    assert(sampleType == P.Sample.self)
+    return predicates.anyOf()
 }

@@ -87,5 +87,6 @@ public func allOf<P>(
     _ predicates: P...,
     as sampleType: P.Sample.Type = P.Sample.self
 ) -> Predicates.AllOf<[P]> {
-    predicates.allOf()
+    assert(sampleType == P.Sample.self)
+    return predicates.allOf()
 }

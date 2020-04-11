@@ -65,15 +65,15 @@ extension MainTestCase {
         XCTAssertFalse(isZeroString.isMatching("1"))
         XCTAssertFalse(isZeroString.isMatching("2"))
 
-        let isASCII = when(Unicode.Scalar.self) { $0.isASCII }
-        let isAlphabetic = when(Unicode.Scalar.self) { $0.properties.isAlphabetic }
+        let isASCII = the(\.isASCII)
+        let isAlphabetic = the(\.isAlphabetic)
         let isASCIIAndAlphabetic = allOf(isASCII, isAlphabetic)
         XCTAssertTrue(isASCIIAndAlphabetic.isMatching("f"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("!"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("é"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("¡"))
 
-        let isWhitespace = when(Unicode.Scalar.self) { $0.properties.isWhitespace }
+        let isWhitespace = the(\.isWhitespace)
         let isAlphabeticOrIsWhitespace = anyOf(isAlphabetic, isWhitespace)
         XCTAssertTrue(isAlphabeticOrIsWhitespace.isMatching("f"))
         XCTAssertTrue(isAlphabeticOrIsWhitespace.isMatching(" "))
