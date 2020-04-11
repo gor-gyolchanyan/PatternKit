@@ -8,16 +8,16 @@ extension Patterns {
     // Exposed
 
     // Type: Patterns
-    // Topic: Serially
+    // Topic: LayedOut
 
     ///
     @frozen
-    public struct Serially<Patterns>
+    public struct LayedOut<Patterns>
     where Patterns: Collection, Patterns.Element: PatternProtocol {
 
         // Exposed
 
-        // Type: Patterns.Serially
+        // Type: Patterns.LayedOut
         // Topic: Main
 
         ///
@@ -31,7 +31,7 @@ extension Patterns {
     }
 }
 
-extension Patterns.Serially: PatternProtocol {
+extension Patterns.LayedOut: PatternProtocol {
 
     // Exposed
 
@@ -65,7 +65,7 @@ where Element: PatternProtocol {
 
     ///
     @inlinable
-    public func serially() -> Patterns.Serially<Self> {
+    public func layedOut() -> Patterns.LayedOut<Self> {
         .init(self)
     }
 }
@@ -74,10 +74,10 @@ where Element: PatternProtocol {
 
 ///
 @inlinable
-public func serially<P>(
+public func layedOut<P>(
     _ patterns: P...,
     as sampleType: P.Sample.Type = P.Sample.self
-) -> Patterns.Serially<[P]> {
+) -> Patterns.LayedOut<[P]> {
     assert(sampleType == P.Sample.self)
-    return patterns.serially()
+    return patterns.layedOut()
 }

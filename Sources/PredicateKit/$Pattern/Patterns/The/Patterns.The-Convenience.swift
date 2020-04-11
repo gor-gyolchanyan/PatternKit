@@ -38,7 +38,7 @@ extension Patterns.The {
     where P: Collection, P.Element: PatternProtocol, P.Element.Sample == Sample
 
     ///
-    public typealias Serially<P> = Patterns.Serially<P>
+    public typealias LayedOut<P> = Patterns.LayedOut<P>
     where P: Collection, P.Element: PatternProtocol, P.Element.Sample == Sample
 
     ///
@@ -67,9 +67,9 @@ extension Patterns.The {
 
     ///
     @inlinable
-    public func serially<P>(
+    public func layedOut<P>(
         _ patterns: P...
-    ) -> Serially<[P]> {
-        patterns.serially()
+    ) -> LayedOut<[P]> {
+        patterns.layedOut()
     }
 }
