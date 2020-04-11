@@ -10,6 +10,7 @@ extension Predicates {
     // Type: Predicates
     // Topic: The
 
+    ///
     @frozen
     public struct The<Sample> {
 
@@ -23,6 +24,9 @@ extension Predicates {
     }
 }
 
+// Exposed
+
+///
 public func the<S, P>(
     _ keyPath: KeyPath<Predicates.The<S>, P>,
     as sampleType: S.Type = S.self

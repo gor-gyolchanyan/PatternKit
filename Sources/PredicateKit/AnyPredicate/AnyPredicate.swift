@@ -5,6 +5,7 @@
 
 // Exposed
 
+///
 @frozen
 public struct AnyPredicate<Sample> {
 
@@ -29,12 +30,14 @@ extension AnyPredicate {
     // Type: AnyPredicate
     // Topic: Main
 
+    ///
     @inlinable
-    public init<Predicate>(_ predicate: Predicate)
-    where Predicate: PredicateProtocol, Predicate.Sample == Sample {
+    public init<P>(_ predicate: P)
+    where P: PredicateProtocol, P.Sample == Sample {
         self.init(_AnyPredicateBoxForPredicate(predicate))
     }
 
+    ///
     @inlinable
     public var underlying: Any {
         _box._underlying
@@ -61,7 +64,21 @@ extension AnyPredicate: PredicateProtocol {
     // Topic: Main
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
-        _box.matches(sample)
+    public func isMatching(_ sample: Sample) -> Bool {
+        _box.isMatching(sample)
+    }
+}
+
+extension PredicateProtocol {
+
+    // Exposed
+
+    // Type: PredicateProtocol
+    // Topic: AnyPredicate
+
+    ///
+    @inlinable
+    public func asAny() -> AnyPredicate<Sample> {
+        .init(self)
     }
 }

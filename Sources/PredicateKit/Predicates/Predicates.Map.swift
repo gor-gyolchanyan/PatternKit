@@ -43,8 +43,8 @@ extension Predicates.Map: PredicateProtocol {
     // Topic: Main
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
-        predicate.matches(mappingFunction(sample))
+    public func isMatching(_ sample: Sample) -> Bool {
+        predicate.isMatching(mappingFunction(sample))
     }
 }
 
@@ -55,12 +55,13 @@ extension PredicateProtocol {
     // Type: PredicateProtocol
     // Topic: Map
 
+    ///
     @inlinable
-    public func map<OtherSample>(
-        to otherSampleType: OtherSample.Type = OtherSample.self,
-        _ mappingFunction: @escaping (OtherSample) -> Sample
-    ) -> Predicates.Map<Self, OtherSample> {
-        assert(otherSampleType == OtherSample.self)
+    public func map<S>(
+        to otherSampleType: S.Type = S.self,
+        _ mappingFunction: @escaping (S) -> Sample
+    ) -> Predicates.Map<Self, S> {
+        assert(otherSampleType == S.self)
         return .init(self, mappedBy: mappingFunction)
     }
 }

@@ -3,6 +3,8 @@
 // Licensing information can be found in the `LICENSE` file located in the root directory of this repository.
 //
 
+// Concealed
+
 @usableFromInline
 final class _AnyPredicateBoxForPredicate<Predicate>: _AnyPredicateBox<Predicate.Sample>
 where Predicate: PredicateProtocol {
@@ -37,8 +39,8 @@ where Predicate: PredicateProtocol {
     typealias Sample = Predicate.Sample
 
     @usableFromInline
-    override func matches(_ sample: Sample) -> Bool {
-        _predicate.matches(sample)
+    override func isMatching(_ sample: Sample) -> Bool {
+        _predicate.isMatching(sample)
     }
 
     // Concealed

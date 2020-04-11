@@ -3,6 +3,8 @@
 // Licensing information can be found in the `LICENSE` file located in the root directory of this repository.
 //
 
+// Concealed
+
 @usableFromInline
 class _AnyPredicateBox<Sample>: PredicateProtocol {
 
@@ -16,19 +18,19 @@ class _AnyPredicateBox<Sample>: PredicateProtocol {
 
     @usableFromInline
     var _underlying: Any {
-        ()
+        fatalError("Execution has reached a routine that should've been overridden.")
     }
 
     @usableFromInline
     func _copy() -> _AnyPredicateBox<Sample> {
-        .init()
+        fatalError("Execution has reached a routine that should've been overridden.")
     }
 
     // Protocol: PredicateProtocol
     // Topic: Main
 
     @usableFromInline
-    func matches(_ sample: Sample) -> Bool {
-        false
+    func isMatching(_ sample: Sample) -> Bool {
+        fatalError("Execution has reached a routine that should've been overridden.")
     }
 }

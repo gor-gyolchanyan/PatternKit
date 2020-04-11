@@ -31,6 +31,19 @@ extension Predicates {
     }
 }
 
+extension Predicates.AllOf: Equatable
+where Predicates: Equatable {
+
+    // Exposed
+
+    // Protocol: Equatable
+    // Topic: Equatable Requirements
+
+    public static func == (_ some: Self, _ other: Self) -> Bool {
+        some.predicates == other.predicates
+    }
+}
+
 extension Predicates.AllOf: PredicateProtocol {
 
     // Exposed
@@ -41,9 +54,9 @@ extension Predicates.AllOf: PredicateProtocol {
     public typealias Sample = Predicates.Element.Sample
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
+    public func isMatching(_ sample: Sample) -> Bool {
         for predicate in predicates {
-            if !predicate.matches(sample) {
+            if !predicate.isMatching(sample) {
                 return false
             }
         }
@@ -51,11 +64,28 @@ extension Predicates.AllOf: PredicateProtocol {
     }
 }
 
+extension Collection
+where Element: PredicateProtocol {
+
+    // Exposed
+
+    // Type: Collection
+    // Topic: PredicateProtocol
+
+    ///
+    @inlinable
+    func allOf() -> Predicates.AllOf<Self> {
+        .init(self)
+    }
+}
+
+// Exposed
+
+///
 @inlinable
 public func allOf<P>(
     _ predicates: P...,
     as sampleType: P.Sample.Type = P.Sample.self
 ) -> Predicates.AllOf<[P]> {
-    assert(sampleType == P.Sample.self)
-    return .init(predicates)
+    predicates.allOf()
 }

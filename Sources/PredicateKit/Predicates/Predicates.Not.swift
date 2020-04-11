@@ -41,8 +41,21 @@ extension Predicates.Not: PredicateProtocol {
     public typealias Sample = Predicate.Sample
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
-        !predicate.matches(sample)
+    public func isMatching(_ sample: Sample) -> Bool {
+        !predicate.isMatching(sample)
+    }
+}
+
+extension Predicates.Not: Equatable
+where Predicate: Equatable {
+
+    // Exposed
+
+    // Protocol: Equatable
+    // Topic: Equatable Requirements
+
+    public static func == (_ some: Self, _ other: Self) -> Bool {
+        some.predicate == other.predicate
     }
 }
 
@@ -53,6 +66,7 @@ extension PredicateProtocol {
     // Type: PredicateProtocol
     // Topic: Not
 
+    ///
     @inlinable
     public static prefix func ! (_ some: Self) -> Predicates.Not<Self> {
         .init(some)

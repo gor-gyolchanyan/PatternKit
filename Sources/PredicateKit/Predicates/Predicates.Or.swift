@@ -31,6 +31,18 @@ extension Predicates {
     }
 }
 
+extension Predicates.Or: Equatable
+where Predicate0: Equatable, Predicate1: Equatable {
+
+    // Exposed
+
+    // Protocol: Equatable
+    // Topic: Equatable Requirements
+
+    public static func == (_ some: Self, _ other: Self) -> Bool {
+        some.predicate == other.predicate
+    }
+}
 extension Predicates.Or: PredicateProtocol {
 
     // Exposed
@@ -41,8 +53,8 @@ extension Predicates.Or: PredicateProtocol {
     public typealias Sample = Predicate0.Sample
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
-        predicate.0.matches(sample) && predicate.1.matches(sample)
+    public func isMatching(_ sample: Sample) -> Bool {
+        predicate.0.isMatching(sample) || predicate.1.isMatching(sample)
     }
 }
 
@@ -53,8 +65,9 @@ extension PredicateProtocol {
     // Type: PredicateProtocol
     // Topic: Or
 
+    ///
     @inlinable
-    public static func || <Other>(_ some: Self, _ other: Other) -> Predicates.Or<Self, Other> {
+    public static func || <O>(_ some: Self, _ other: O) -> Predicates.Or<Self, O> {
         .init(some, other)
     }
 }

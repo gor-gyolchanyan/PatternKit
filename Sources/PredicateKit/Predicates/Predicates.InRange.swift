@@ -31,6 +31,19 @@ extension Predicates {
     }
 }
 
+extension Predicates.InRange: Equatable
+where SampleRange: Equatable {
+
+    // Exposed
+
+    // Protocol: Equatable
+    // Topic: Equatable Requirements
+
+    public static func == (_ some: Self, _ other: Self) -> Bool {
+        some.sampleRange == other.sampleRange
+    }
+}
+
 extension Predicates.InRange: PredicateProtocol {
 
     // Exposed
@@ -41,16 +54,19 @@ extension Predicates.InRange: PredicateProtocol {
     public typealias Sample = SampleRange.Bound
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
+    public func isMatching(_ sample: Sample) -> Bool {
         sampleRange.contains(sample)
     }
 }
 
+// Exposed
+
+///
 @inlinable
-public func inRange<SampleRange>(
-    _ sampleRange: SampleRange,
-    as sampleType: SampleRange.Bound.Type = SampleRange.Bound.self
-) -> Predicates.InRange<SampleRange> {
-    assert(sampleType == SampleRange.Bound.self)
+public func inRange<S>(
+    _ sampleRange: S,
+    as sampleType: S.Bound.Type = S.Bound.self
+) -> Predicates.InRange<S> {
+    assert(sampleType == S.Bound.self)
     return .init(sampleRange)
 }

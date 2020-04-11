@@ -31,6 +31,18 @@ extension Predicates {
     }
 }
 
+extension Predicates.EqualTo: Equatable {
+
+    // Exposed
+
+    // Protocol: Equatable
+    // Topic: Equatable Requirements
+
+    public static func == (_ some: Self, _ other: Self) -> Bool {
+        some.sample == other.sample
+    }
+}
+
 extension Predicates.EqualTo: PredicateProtocol {
 
     // Exposed
@@ -39,16 +51,19 @@ extension Predicates.EqualTo: PredicateProtocol {
     // Topic: Main
 
     @inlinable
-    public func matches(_ sample: Sample) -> Bool {
+    public func isMatching(_ sample: Sample) -> Bool {
         sample == self.sample
     }
 }
 
+// Exposed
+
+///
 @inlinable
-public func equalTo<Sample>(
-    _ sample: Sample,
-    as sampleType: Sample.Type = Sample.self
-) -> Predicates.EqualTo<Sample> {
-    assert(sampleType == Sample.self)
+public func equalTo<S>(
+    _ sample: S,
+    as sampleType: S.Type = S.self
+) -> Predicates.EqualTo<S> {
+    assert(sampleType == S.self)
     return .init(sample)
 }
