@@ -3,7 +3,7 @@
 // Licensing information can be found in the `LICENSE` file located in the root directory of this repository.
 //
 
-import PredicateKit
+import PatternKit
 
 extension Predicates.The
 where Sample == Unicode.Scalar {

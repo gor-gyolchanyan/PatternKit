@@ -1,10 +1,10 @@
 import XCTest
 
-import PredicateKit_Test
+import PatternKit_Test
 
 var testCaseEntrySet: [XCTestCaseEntry] {
     var result = [XCTestCaseEntry]()
-    result.append(contentsOf: PredicateKit_Test.testCaseEntrySet)
+    result.append(contentsOf: PatternKit_Test.testCaseEntrySet)
     return result
 }
 

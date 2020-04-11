@@ -1,5 +1,5 @@
 import XCTest
-@testable import PredicateKit
+@testable import PatternKit
 
 // Type: MainTestCase
 

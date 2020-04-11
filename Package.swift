@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PredicateKit",
+    name: "PatternKit",
     platforms: [
         .macOS(.v10_15),
         .iOS(.v13),
@@ -12,17 +12,17 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "PredicateKit",
-            targets: ["PredicateKit"]
+            name: "PatternKit",
+            targets: ["PatternKit"]
         ),
     ],
     targets: [
         .target(
-            name: "PredicateKit"
+            name: "PatternKit"
         ),
         .testTarget(
-            name: "PredicateKit.Test",
-            dependencies: ["PredicateKit"]
+            name: "PatternKit.Test",
+            dependencies: ["PatternKit"]
         ),
     ]
 )
