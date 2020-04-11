@@ -11,6 +11,9 @@ extension Patterns.The {
     // Topic: Convenience
 
     ///
+    public typealias `Any` = AnyPattern<Sample>
+
+    ///
     public typealias Many<P> = Patterns.Many<P>
     where P: PatternProtocol, P.Sample == Sample
 

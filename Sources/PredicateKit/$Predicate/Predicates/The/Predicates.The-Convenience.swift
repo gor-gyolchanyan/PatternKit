@@ -11,6 +11,9 @@ extension Predicates.The {
     // Topic: Convenience
 
     ///
+    public typealias `Any` = AnyPredicate<Sample>
+
+    ///
     public typealias When = Predicates.When<Sample>
 
     ///
@@ -91,14 +94,26 @@ where Sample: Comparable {
     // Topic: Convenience
 
     ///
-    public typealias InRange<S> = Predicates.InRange<S>
-    where S: RangeExpression, S.Bound == Sample
+    public typealias InPartialRangeFrom = Predicates.InRange<PartialRangeFrom<Sample>>
+
+    ///
+    public typealias InPartialRangeThrough = Predicates.InRange<PartialRangeThrough<Sample>>
+
+    ///
+    public typealias InPartialRangeUpTo = Predicates.InRange<PartialRangeUpTo<Sample>>
+
+    ///
+    public typealias InClosedRange = Predicates.InRange<ClosedRange<Sample>>
+
+    ///
+    public typealias InRange = Predicates.InRange<Range<Sample>>
 
     ///
     @inlinable
     public func inRange<S>(
         _ sampleRange: S
-    ) -> InRange<S> {
+    ) -> Predicates.InRange<S>
+    where S.Bound == Sample {
         return .init(sampleRange)
     }
 }
