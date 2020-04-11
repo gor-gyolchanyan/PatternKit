@@ -11,12 +11,20 @@ let package = Package(
         .watchOS(.v6)
     ],
     products: [
+        .executable(
+            name: "PatternKit.Sample1",
+            targets: ["PatternKit.Sample1"]
+        ),
         .library(
             name: "PatternKit",
             targets: ["PatternKit"]
         ),
     ],
     targets: [
+        .target(
+            name: "PatternKit.Sample1",
+            dependencies: ["PatternKit"]
+        ),
         .target(
             name: "PatternKit"
         ),
