@@ -5,6 +5,6 @@
 
 // Exposed
 
-// A namespace for standard predicates.
+// A namespace for types that serve as patterns.
 @frozen
-public enum Predicates { }
+public enum Patterns { }

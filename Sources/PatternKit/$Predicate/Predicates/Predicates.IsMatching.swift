@@ -8,34 +8,35 @@ extension Predicates {
     // Exposed
 
     // Type: Predicates
-    // Topic: Function
+    // Topic: IsMatching
 
     ///
     @frozen
-    public struct Function<Sample> {
+    public struct IsMatching<Value> {
 
-        // Exposed
+        // Concealed
 
-        // Type: Predicates.Function
+        // Type: Predicates.IsMatching
         // Topic: Main
 
-        ///
         @inlinable
-        public init(matchedBy matchingFunction: @escaping (Sample) -> Bool) {
+        init(_ matchingFunction: @escaping (Value) -> Bool) {
             self.matchingFunction = matchingFunction
         }
 
-        ///
-        public var matchingFunction: (Sample) -> Bool
+        @usableFromInline
+        let matchingFunction: (Value) -> Bool
     }
 }
 
-extension Predicates.Function: PredicateProtocol {
+extension Predicates.IsMatching: PredicateProtocol {
 
     // Exposed
 
     // Protocol: PredicateProtocol
     // Topic: Main
+
+    public typealias Sample = Value
 
     @inlinable
     public func isMatching(_ sample: Sample) -> Bool {
@@ -43,19 +44,16 @@ extension Predicates.Function: PredicateProtocol {
     }
 }
 
-extension Factory {
+extension Sample {
 
     // Exposed
 
-    // Type: Factory
-    // Topic: Main
-
-    ///
-    public typealias Function = Predicates.Function<Sample>
+    // Type: Sample
+    // Topic: Predicates.IsMatching
 
     ///
     @inlinable
-    public func callAsFunction(_ matchingFunction: @escaping (Sample) -> Bool) -> Function {
-        .init(matchedBy: matchingFunction)
+    public func isMatching(_ matchingFunction: @escaping (Value) -> Bool) -> Predicates.IsMatching<Value> {
+        .init(matchingFunction)
     }
 }

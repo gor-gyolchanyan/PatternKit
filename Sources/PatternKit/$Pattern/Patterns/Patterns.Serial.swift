@@ -8,21 +8,21 @@ extension Patterns {
     // Exposed
 
     // Type: Patterns
-    // Topic: Or
+    // Topic: Serial
 
     ///
     @frozen
-    public struct Or<Pattern0, Pattern1>
+    public struct Serial<Pattern0, Pattern1>
     where Pattern0: PatternProtocol, Pattern1: PatternProtocol, Pattern1.Sample == Pattern0.Sample {
 
-        // Concealed
+        // Exposed
 
-        // Type: Patterns.Or
+        // Type: Patterns.Serial
         // Topic: Main
 
         @inlinable
         init(_ pattern0: Pattern0, _ pattern1: Pattern1) {
-            self.pattern = (pattern0, pattern1)
+            pattern = (pattern0, pattern1)
         }
 
         @usableFromInline
@@ -30,11 +30,11 @@ extension Patterns {
     }
 }
 
-extension Patterns.Or: PatternProtocol {
+extension Patterns.Serial: PatternProtocol {
 
     // Exposed
 
-    // Protocol: PatternProtocol
+    // Type: PatternProtocol
     // Topic: Main
 
     public typealias Sample = Pattern0.Sample
@@ -42,24 +42,18 @@ extension Patterns.Or: PatternProtocol {
     @inlinable
     public func indexAfterMatching<S>(prefixOf samples: S) -> S.Index?
     where S: Collection, S.Element == Sample {
-        let theIndex0 = pattern.0.indexAfterMatching(prefixOf: samples)
-        let theIndex1 = pattern.1.indexAfterMatching(prefixOf: samples)
-        guard let index0 = theIndex0 else { return theIndex1 }
-        guard let index1 = theIndex1 else { return theIndex0 }
-        return max(index0, index1)
+        guard
+            let index0 = pattern.0.indexAfterMatching(prefixOf: samples),
+            let index1 = pattern.1.indexAfterMatching(prefixOf: samples[index0...])
+        else {
+            return nil
+        }
+        return index1
     }
 }
 
-extension PatternProtocol {
-
-    // Exposed
-
-    // Type: PatternProtocol
-    // Topic: Or
-
-    ///
-    @inlinable
-    public static func | <O>(_ some: Self, _ other: O) -> Patterns.Or<Self, O> {
-        .init(some, other)
-    }
+///
+@inlinable
+public func + <P0, P1>(_ pattern0: P0, pattern1: P1) -> Patterns.Serial<P0, P1> {
+    .init(pattern0, pattern1)
 }

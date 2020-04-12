@@ -8,59 +8,60 @@ extension Patterns {
     // Exposed
 
     // Type: Patterns
-    // Topic: MapFrom
+    // Topic: Repeating
 
     ///
     @frozen
-    public struct Map<Pattern, Sample>
+    public struct Repeating<Pattern>
     where Pattern: PatternProtocol {
 
         // Concealed
 
-        // Type: Patterns.MapFrom
+        // Type: Patterns.Repeating
         // Topic: Main
 
         @inlinable
-        init(_ pattern: Pattern, mappedBy mappingFunction: @escaping (Sample) -> Pattern.Sample) {
+        init(_ pattern: Pattern, many: Many) {
             self.pattern = pattern
-            self.mappingFunction = mappingFunction
+            self.many = many
         }
 
         @usableFromInline
         let pattern: Pattern
 
         @usableFromInline
-        let mappingFunction: (Sample) -> Pattern.Sample
+        let many: Many
     }
 }
 
-extension Patterns.Map: PatternProtocol {
+extension Patterns.Repeating: PatternProtocol {
 
     // Exposed
 
     // Protocol: PatternProtocol
     // Topic: Main
 
+    public typealias Sample = Pattern.Sample
+
     @inlinable
     public func indexAfterMatching<S>(prefixOf samples: S) -> S.Index?
     where S: Collection, S.Element == Sample {
-        let samples = samples.lazy.map(mappingFunction)
-        return pattern.indexAfterMatching(prefixOf: samples)
+        many.reduce(samples.startIndex) { index in
+            pattern.indexAfterMatching(prefixOf: samples[index...])
+        }
     }
 }
 
-extension PatternProtocol {
+///
+@inlinable
+public func * <P>(_ pattern: P, _ many: Many) -> Patterns.Repeating<P>
+where P: PatternProtocol {
+    .init(pattern, many: many)
+}
 
-    // Exposed
-
-    // Type: PatternProtocol
-    // Topic: MapFrom
-
-    ///
-    @inlinable
-    public func map<S>(
-        _ mappingFunction: @escaping (S) -> Sample
-    ) -> Patterns.Map<Self, S> {
-        .init(self, mappedBy: mappingFunction)
-    }
+///
+@inlinable
+public func * <P>(_ many: Many, _ pattern: P) -> Patterns.Repeating<P>
+where P: PatternProtocol {
+    .init(pattern, many: many)
 }

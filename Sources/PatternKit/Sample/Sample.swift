@@ -5,11 +5,12 @@
 
 // Exposed
 
-public struct Factory<Sample> {
+///
+public struct Sample<Value> {
 
     // Exposed
 
-    // Type: Factory
+    // Type: Sample
     // Topic: Main
 
     ///

@@ -8,21 +8,21 @@ extension Predicates {
     // Exposed
 
     // Type: Predicates
-    // Topic: Not
+    // Topic: Opposite
 
     ///
     @frozen
-    public struct Not<Predicate>
+    public struct Opposite<Predicate>
     where Predicate: PredicateProtocol {
 
-        // Concealed
+        // Exposed
 
-        // Type: Predicates.Not
+        // Type: Predicates.Opposite
         // Topic: Main
 
         @inlinable
-        init(_ pattern: Predicate) {
-            self.predicate = pattern
+        init(_ predicate: Predicate) {
+            self.predicate = predicate
         }
 
         @usableFromInline
@@ -30,11 +30,11 @@ extension Predicates {
     }
 }
 
-extension Predicates.Not: PredicateProtocol {
+extension Predicates.Opposite: PredicateProtocol {
 
     // Exposed
 
-    // Protocol: PredicateProtocol
+    // Type: PredicateProtocol
     // Topic: Main
 
     public typealias Sample = Predicate.Sample
@@ -45,16 +45,8 @@ extension Predicates.Not: PredicateProtocol {
     }
 }
 
-extension PredicateProtocol {
-
-    // Exposed
-
-    // Type: PredicateProtocol
-    // Topic: Not
-
-    ///
-    @inlinable
-    public static prefix func ! (_ some: Self) -> Predicates.Not<Self> {
-        .init(some)
-    }
+///
+@inlinable
+public prefix func ! <P>(_ predicate: P) -> Predicates.Opposite<P> {
+    .init(predicate)
 }
