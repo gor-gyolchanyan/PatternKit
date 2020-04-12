@@ -59,7 +59,7 @@ extension PatternProtocol {
 
     ///
     @inlinable
-    public static func || <O>(_ some: Self, _ other: O) -> Patterns.Or<Self, O> {
+    public static func | <O>(_ some: Self, _ other: O) -> Patterns.Or<Self, O> {
         .init(some, other)
     }
 }

@@ -45,14 +45,14 @@ extension MainTestCase {
         XCTAssertTrue(isNonZero.isMatching(2))
 
         let isEven = when(Int.self) { $0.isMultiple(of: 2) }
-        let isPositiveAndEven = isPositive && isEven
+        let isPositiveAndEven = isPositive & isEven
         XCTAssertFalse(isPositiveAndEven.isMatching(-2))
         XCTAssertFalse(isPositiveAndEven.isMatching(-1))
         XCTAssertFalse(isPositiveAndEven.isMatching(0))
         XCTAssertFalse(isPositiveAndEven.isMatching(1))
         XCTAssertTrue(isPositiveAndEven.isMatching(2))
 
-        let isPositiveOrEven = isPositive || isEven
+        let isPositiveOrEven = isPositive | isEven
         XCTAssertTrue(isPositiveOrEven.isMatching(-2))
         XCTAssertFalse(isPositiveOrEven.isMatching(-1))
         XCTAssertTrue(isPositiveOrEven.isMatching(0))
@@ -66,15 +66,15 @@ extension MainTestCase {
         XCTAssertFalse(isZeroString.isMatching("1"))
         XCTAssertFalse(isZeroString.isMatching("2"))
 
-        let isASCII = the(\.isASCII)
-        let isAlphabetic = the(\.isAlphabetic)
+        let isASCII = when(Unicode.Scalar.self) { $0.isASCII }
+        let isAlphabetic = when(Unicode.Scalar.self) { $0.properties.isAlphabetic }
         let isASCIIAndAlphabetic = allOf(isASCII, isAlphabetic)
         XCTAssertTrue(isASCIIAndAlphabetic.isMatching("f"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("!"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("é"))
         XCTAssertFalse(isASCIIAndAlphabetic.isMatching("¡"))
 
-        let isWhitespace = the(\.isWhitespace)
+        let isWhitespace = when(Unicode.Scalar.self) { $0.properties.isWhitespace }
         let isAlphabeticOrIsWhitespace = anyOf(isAlphabetic, isWhitespace)
         XCTAssertTrue(isAlphabeticOrIsWhitespace.isMatching("f"))
         XCTAssertTrue(isAlphabeticOrIsWhitespace.isMatching(" "))

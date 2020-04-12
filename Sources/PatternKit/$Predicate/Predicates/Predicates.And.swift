@@ -68,7 +68,7 @@ extension PredicateProtocol {
 
     ///
     @inlinable
-    public static func && <O>(_ some: Self, _ other: O) -> Predicates.And<Self, O> {
+    public static func & <O>(_ some: Self, _ other: O) -> Predicates.And<Self, O> {
         .init(some, other)
     }
 }

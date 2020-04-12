@@ -101,43 +101,42 @@ extension PatternProtocol {
 
     ///
     @inlinable
-    public static func * (_ some: Self, _ other: Int) -> Patterns.Many<Self> {
-        .init(some, smallestCount: other, largestCount: other)
-    }
-
-    ///
-    @inlinable
-    public static func * (_ some: Self, _ other: PartialRangeFrom<Int>) -> Patterns.Many<Self> {
-        .init(some, smallestCount: other.lowerBound)
-    }
-
-    ///
-    @inlinable
-    public static func * (_ some: Self, _ other: PartialRangeThrough<Int>) -> Patterns.Many<Self> {
-        .init(some, largestCount: other.upperBound)
-    }
-
-    ///
-    @inlinable
-    public static func * (_ some: Self, _ other: PartialRangeUpTo<Int>) -> Patterns.Many<Self> {
-        .init(some, largestCount: other.upperBound - 1)
-    }
-
-    ///
-    @inlinable
-    public static func * (_ some: Self, _ other: ClosedRange<Int>) -> Patterns.Many<Self> {
-        .init(some, smallestCount: other.lowerBound, largestCount: other.upperBound)
-    }
-
-    ///
-    @inlinable
-    public static func * (_ some: Self, _ other: Range<Int>) -> Patterns.Many<Self> {
-        .init(some, smallestCount: other.lowerBound, largestCount: other.upperBound - 1)
-    }
-
-    ///
-    @inlinable
     public func many() -> Patterns.Many<Self> {
         .init(self)
+    }
+
+    ///
+    @inlinable
+    public func many(_ count: Int) -> Patterns.Many<Self> {
+        .init(self, smallestCount: count, largestCount: count)
+    }
+
+    ///
+    @inlinable
+    public func many(_ count: PartialRangeFrom<Int>) -> Patterns.Many<Self> {
+        .init(self, smallestCount: count.lowerBound)
+    }
+
+    ///
+    @inlinable
+    public func many(_ count: PartialRangeThrough<Int>) -> Patterns.Many<Self> {
+        .init(self, largestCount: count.upperBound)
+    }
+
+    ///
+    @inlinable
+    public func many(_ count: PartialRangeUpTo<Int>) -> Patterns.Many<Self> {
+        .init(self, largestCount: count.upperBound - 1)
+    }
+
+    ///
+    @inlinable
+    public func many(_ count: ClosedRange<Int>) -> Patterns.Many<Self> {
+        .init(self, smallestCount: count.lowerBound, largestCount: count.upperBound)
+    }
+    ///
+    @inlinable
+    public func many(_ count: Range<Int>) -> Patterns.Many<Self> {
+        .init(self, smallestCount: count.lowerBound, largestCount: count.upperBound - 1)
     }
 }
